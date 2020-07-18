@@ -1,0 +1,6 @@
+module Pods_HomeOxygenApp {
+  umbrella header "Pods-HomeOxygenApp-umbrella.h"
+
+  export *
+  module * { export * }
+}
