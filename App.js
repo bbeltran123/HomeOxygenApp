@@ -16,6 +16,7 @@ import thunk from 'redux-thunk';
 
 import {BleManager} from 'react-native-ble-plx';
 
+import HomeScreen from './HomeScreen'
 import BLEList from './BLElist';
 import BLEservices from './BLEservices'
 import BLEservicecharacteristics from './BLEservicecharacteristics'
@@ -26,6 +27,7 @@ import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
+  Text,
   View,
   StatusBar,
 } from 'react-native';
@@ -39,10 +41,34 @@ import {
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const DeviceManager = new BleManager();
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function BLEScreens() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="BLEDevices" component={BLEList} />
+      <Stack.Screen name="BLEServices" component={BLEservices} />
+      <Stack.Screen name="BLECharacteristics" component={BLEservicecharacteristics} />
+      <Stack.Screen name="BLECharacteristic" component={BLECharacteristic} />
+    </Stack.Navigator>
+  )
+}
+
+function MyTabs() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="BLE" component={BLEScreens} />
+    </Tab.Navigator>
+  );
+}
+
+
 
 const composeEnhancers = composeWithDevTools({
   // Specify here name, actionsBlacklist, actionsCreators and other options
@@ -57,12 +83,7 @@ const App: () => React$Node = () => {
     <>
       <Provider store={ store }>
         <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen name="BLEDevices" component={BLEList} />
-            <Stack.Screen name="BLEServices" component={BLEservices} />
-            <Stack.Screen name="BLECharacteristics" component={BLEservicecharacteristics} />
-            <Stack.Screen name="BLECharacteristic" component={BLECharacteristic} />
-          </Stack.Navigator>
+          <MyTabs />
         </NavigationContainer>
       </Provider>
     </>

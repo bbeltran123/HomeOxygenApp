@@ -8,7 +8,7 @@
 #import <React/RCTShadowView.h>
 #import <React/RCTTouchHandler.h>
 
-@interface RNSScreenView () <UIAdaptivePresentationControllerDelegate>
+@interface RNSScreenView () <UIAdaptivePresentationControllerDelegate, RCTInvalidating>
 @end
 
 @implementation RNSScreenView {
@@ -27,6 +27,7 @@
     _stackPresentation = RNSScreenStackPresentationPush;
     _stackAnimation = RNSScreenStackAnimationDefault;
     _gestureEnabled = YES;
+    _dismissed = NO;
   }
 
   return self;
@@ -44,6 +45,11 @@
   // the screen dimentions and we wait for the screen VC to update and then we
   // pass the dimentions to ui view manager to take into account when laying out
   // subviews
+}
+
+- (UIViewController *)reactViewController
+{
+  return _controller;
 }
 
 - (void)updateBounds
@@ -67,7 +73,6 @@
 
 - (void)setStackPresentation:(RNSScreenStackPresentation)stackPresentation
 {
-  _stackPresentation = stackPresentation;
   switch (stackPresentation) {
     case RNSScreenStackPresentationModal:
 #ifdef __IPHONE_13_0
@@ -95,11 +100,23 @@
     case RNSScreenStackPresentationContainedTransparentModal:
       _controller.modalPresentationStyle = UIModalPresentationOverCurrentContext;
       break;
+    case RNSScreenStackPresentationPush:
+      // ignored, we only need to keep in mind not to set presentation delegate
+      break;
   }
-  // `modalPresentationStyle` must be set before accessing `presentationController`
-  // otherwise a default controller will be created and cannot be changed after.
-  // Documented here: https://developer.apple.com/documentation/uikit/uiviewcontroller/1621426-presentationcontroller?language=objc
-  _controller.presentationController.delegate = self;
+  // There is a bug in UIKit which causes retain loop when presentationController is accessed for a
+  // controller that is not going to be presented modally. We therefore need to avoid setting the
+  // delegate for screens presented using push. This also means that when controller is updated from
+  // modal to push type, this may cause memory leak, we warn about that as well.
+  if (stackPresentation != RNSScreenStackPresentationPush) {
+    // `modalPresentationStyle` must be set before accessing `presentationController`
+    // otherwise a default controller will be created and cannot be changed after.
+    // Documented here: https://developer.apple.com/documentation/uikit/uiviewcontroller/1621426-presentationcontroller?language=objc
+    _controller.presentationController.delegate = self;
+  } else if (_stackPresentation != RNSScreenStackPresentationPush) {
+    RCTLogError(@"Screen presentation updated from modal to push, this may likely result in a screen object leakage. If you need to change presentation style create a new screen object instead");
+  }
+  _stackPresentation = stackPresentation;
 }
 
 - (void)setStackAnimation:(RNSScreenStackAnimation)stackAnimation
@@ -152,6 +169,7 @@
 
 - (void)notifyDismissed
 {
+  _dismissed = YES;
   if (self.onDismissed) {
     dispatch_async(dispatch_get_main_queue(), ^{
       if (self.onDismissed) {
@@ -226,10 +244,14 @@
   }
 }
 
+- (void)invalidate
+{
+  _controller = nil;
+}
+
 @end
 
 @implementation RNSScreen {
-  __weak UIView *_view;
   __weak id _previousFirstResponder;
   CGRect _lastViewFrame;
 }
@@ -237,7 +259,7 @@
 - (instancetype)initWithView:(UIView *)view
 {
   if (self = [super init]) {
-    _view = view;
+    self.view = view;
   }
   return self;
 }
@@ -248,7 +270,7 @@
 
   if (!CGRectEqualToRect(_lastViewFrame, self.view.frame)) {
     _lastViewFrame = self.view.frame;
-    [((RNSScreenView *)self.view) updateBounds];
+    [((RNSScreenView *)self.viewIfLoaded) updateBounds];
   }
 }
 
@@ -268,6 +290,7 @@
 
 - (void)willMoveToParentViewController:(UIViewController *)parent
 {
+  [super willMoveToParentViewController:parent];
   if (parent == nil) {
     id responder = [self findFirstResponder:self.view];
     if (responder != nil) {
@@ -282,8 +305,6 @@
   if (self.parentViewController == nil && self.presentingViewController == nil) {
     // screen dismissed, send event
     [((RNSScreenView *)self.view) notifyDismissed];
-    _view = self.view;
-    self.view = nil;
   }
 }
 
@@ -297,14 +318,6 @@
 {
   [_previousFirstResponder becomeFirstResponder];
   _previousFirstResponder = nil;
-}
-
-- (void)loadView
-{
-  if (_view != nil) {
-    self.view = _view;
-    _view = nil;
-  }
 }
 
 @end
