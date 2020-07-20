@@ -14,9 +14,12 @@ import { createStore,applyMiddleware } from 'redux';
 import rootReducer from './reducers/index';
 import thunk from 'redux-thunk';
 
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import {BleManager} from 'react-native-ble-plx';
 
-import HomeScreen from './HomeScreen'
+import Home from './Home'
+import Data from './Data'
 import BLEList from './BLElist';
 import BLEservices from './BLEservices'
 import BLEservicecharacteristics from './BLEservicecharacteristics'
@@ -48,6 +51,38 @@ const DeviceManager = new BleManager();
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+function MyTabs() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="BLE" 
+      component={BLEScreens} 
+      options={{ 
+          tabBarIcon: ({}) => (
+            <Icon name="bluetooth-outline" size={20}/>
+          )
+        }}
+      />
+      <Tab.Screen 
+        name="Home" 
+        component={Home} 
+        options={{ 
+          tabBarIcon: ({}) => (
+            <Icon name="person-outline" size={20}/>
+          )
+        }}
+      />
+      <Tab.Screen name="Data" 
+      component={Data} 
+      options={{ 
+          tabBarIcon: ({}) => (
+            <Icon name="stats-chart-outline" size={20}/>
+          )
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+
 function BLEScreens() {
   return (
     <Stack.Navigator>
@@ -59,17 +94,6 @@ function BLEScreens() {
   )
 }
 
-function MyTabs() {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="BLE" component={BLEScreens} />
-    </Tab.Navigator>
-  );
-}
-
-
-
 const composeEnhancers = composeWithDevTools({
   // Specify here name, actionsBlacklist, actionsCreators and other options
 });
@@ -77,7 +101,6 @@ const composeEnhancers = composeWithDevTools({
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk.withExtraArgument(DeviceManager))));
 
 const App: () => React$Node = () => {
-
 
   return (
     <>
