@@ -53,12 +53,19 @@ const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+        tabBarOptions={{
+          activeBackgroundColor: '#4DA6A6',
+          activeTintColor: '#FFF',
+          inactiveTintColor: '#000',
+          showLabel: false
+        }}
+      >
       <Tab.Screen name="BLE" 
       component={BLEScreens} 
       options={{ 
-          tabBarIcon: ({}) => (
-            <Icon name="bluetooth-outline" size={20}/>
+          tabBarIcon: ({color, size}) => (
+            <Icon name="bluetooth-outline" color={color} size={size}/>
           )
         }}
       />
@@ -66,16 +73,16 @@ function MyTabs() {
         name="Home" 
         component={Home} 
         options={{ 
-          tabBarIcon: ({}) => (
-            <Icon name="person-outline" size={20}/>
+          tabBarIcon: ({color, size}) => (
+            <Icon name="person-outline" color={color} size={size}/>
           )
         }}
       />
       <Tab.Screen name="Data" 
       component={Data} 
       options={{ 
-          tabBarIcon: ({}) => (
-            <Icon name="stats-chart-outline" size={20}/>
+          tabBarIcon: ({color, size}) => (
+            <Icon name="stats-chart-outline" color={color} size={size}/>
           )
         }}
       />
