@@ -61,7 +61,8 @@ function MyTabs() {
           showLabel: false
         }}
       >
-      <Tab.Screen name="BLE" 
+      <Tab.Screen 
+      name="BLE" 
       component={BLEScreens} 
       options={{ 
           tabBarIcon: ({color, size}) => (
@@ -92,8 +93,21 @@ function MyTabs() {
 
 function BLEScreens() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="BLEDevices" component={BLEList} />
+    <Stack.Navigator
+      screenOptions={{
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            color: '#000'
+          },
+          headerTintColor: 'white',
+          headerLeft: (props) => (
+            <Icon name="stats-chart-outline" size={20}/>),
+        }}
+    >
+      <Stack.Screen 
+        name="BLEDevices" 
+        component={BLEList} 
+        />
       <Stack.Screen name="BLEServices" component={BLEservices} />
       <Stack.Screen name="BLECharacteristics" component={BLEservicecharacteristics} />
       <Stack.Screen name="BLECharacteristic" component={BLECharacteristic} />

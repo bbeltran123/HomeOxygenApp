@@ -24,8 +24,6 @@ class BLEList extends Component {
     this.props.startScan();
   }
 
-  
-  
   handleClick = (device) => {
     this.props.connectDevice(device);
     this.props.navigation.navigate('BLEServices');
@@ -34,7 +32,6 @@ class BLEList extends Component {
   render() {     
     return (
       <Container>
-        <Header />
         <FlatList
                 data={this.props.BLEList}
                 renderItem={({ item }) => 

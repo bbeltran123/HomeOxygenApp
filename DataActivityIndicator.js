@@ -10,8 +10,8 @@ DataActivityIndicator = () => {
     return(
     <View style={[styles.container]}>
         <View style={[styles.horizontal]}>
-            <Text>Loading Data...</Text>
-            <ActivityIndicator size="large" color="#0000ff" />
+            <ActivityIndicator size="large" color="#4DA6A6" />
+            <Text>Searching...</Text>
         </View>
     </View>
     );
@@ -20,12 +20,14 @@ DataActivityIndicator = () => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      alignItems: 'center'  
     },
     horizontal: {
+      flex: 1, 
+      justifyContent: 'center', 
+      alignItems: 'center',
       flexDirection: 'column',
-      alignItems: 'center'
     }
   })
 
