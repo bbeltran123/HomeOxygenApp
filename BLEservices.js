@@ -10,7 +10,7 @@ function Item({ service }) {
     return (
       <View style={styles.item}>
         <Text style={styles.title}>{service.uuid}</Text>
-        <Text style={styles.subtextss}>Primary: {service.isPrimary.toString()}</Text>
+        <Text style={styles.subtext}>Primary: {service.isPrimary.toString()}</Text>
       </View>
     );
   }
@@ -61,15 +61,17 @@ const styles = StyleSheet.create({
       marginTop: 2,
     },
     item: {
-      backgroundColor: '#f9c2ff',
+      backgroundColor: '#4DA6A6',
       padding: 20,
       marginVertical: 8,
       marginHorizontal: 16,
     },
     title: {
+      color: 'white',
       fontSize: 14,
     },
     subtext: {
-        fontSize: 10,
+      color: 'white',
+      fontSize: 10,
       },
   });

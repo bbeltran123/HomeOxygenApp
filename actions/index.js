@@ -43,6 +43,7 @@ export const startScan = () => {
     // you can use Device Manager here
     const subscription = DeviceManager.onStateChange((state) => {
       if (state === 'PoweredOn') {
+        console.log("crumbs")
         dispatch(scan());
         subscription.remove();
       }
@@ -80,13 +81,15 @@ export const scan = () => {
   return async (dispatch, getState, DeviceManager) => {
     const permission = Platform.OS === 'ios'? true: await requestLocationPermission();
     if (permission) {
-      DeviceManager.startDeviceScan(null, null, (error, device) => {
+      DeviceManager.startDeviceScan(null , null, (error, device) => {
         dispatch(changeStatus('Scanning'));
         if (error) {
           console.log(error);
         }
         if (device !== null) {
-          dispatch(addBLE(device));
+          if(device.name === 'O2Ring 6598'){
+            dispatch(addBLE(device));
+          }
         }
       });
     } else {
@@ -125,7 +128,7 @@ export const connectDevice = (device) => {
         return services;
       })
       .then((services) => {
-          console.log("found services: ", services)
+          // console.log("found services: ", services)
           dispatch(connectedDeviceServices(services));
         }, (error) => {
           console.log(this._logError("SCAN", error));
@@ -147,9 +150,11 @@ const crcVal = (array) => {
 }
 
 function str2ab(str) {
-  console.log("string to send: ", str)
+  // console.log("string to send: ", str)
   var bufView = new Uint8Array(str.length);
+  // console.log(bufView)
   for (var i = 0, strLen = str.length; i < strLen; i++) {
+    // console.log(str.charCodeAt(i))
     bufView[i] = str.charCodeAt(i);
   }
   return bufView;
@@ -158,6 +163,7 @@ function str2ab(str) {
 export const writeCharacteristic = (text) => {
   return (dispatch, getState, DeviceManager) => {
     const state = getState();
+    console.log(state.BLEs.connectedDevice)
     let buffer = str2ab(text)
     let packetsize = 20;
     let offset = 0;
@@ -169,9 +175,14 @@ export const writeCharacteristic = (text) => {
         packetlength = offset + packetsize;
       }
       let packet = buffer.slice(offset, packetlength);
-      console.log("packet: ", packet)
+      // console.log("packet: ", packet)
       let base64packet = Base64.btoa(String.fromCharCode.apply(null, packet));
-      state.BLEs.connectedDevice.writeCharacteristicWithoutResponseForService(state.BLEs.selectedService.uuid, state.BLEs.selectedCharacteristic.uuid, base64packet)
+      console.log("base64 packet: ", base64packet)
+      let newbase64packet = "qhTrAAAAAMY="
+      let resetpacket = "qhjnAAAAALs="
+      state.BLEs.connectedDevice.writeCharacteristicWithoutResponseForService(state.BLEs.selectedService.uuid, state.BLEs.selectedCharacteristic.uuid, newbase64packet)
+      console.log("\n\n\n")
+      console.log(state.BLEs.connectedDevice)
       offset += packetsize;
     } while (offset < buffer.length)
   }

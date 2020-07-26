@@ -21,13 +21,14 @@ function Item({ characteristic }) {
 }
 
 function handleClick (BLECharacteristic,characteristic){
-    console.log("handleclick:", BLECharacteristic);
+    // console.log("handleclick:", BLECharacteristic);
+    console.log(ReduxStore)
     BLECharacteristic.selectCharacteristic(characteristic);
     BLECharacteristic.navigation.navigate('BLECharacteristic');
 }
 
 function BLEservicecharacteristics(BLECharacteristics) {
-  console.log("function:", BLECharacteristics);
+  // console.log("function:", BLECharacteristics);
   BLECharacteristics.getServiceCharacteristics(BLECharacteristics.BLEService);
     return(
         <SafeAreaView style={styles.container}>
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
       marginTop: 2,
     },
     item: {
-      backgroundColor: '#f9c2ff',
+      backgroundColor: '#4DA6A6',
       padding: 20,
       marginVertical: 8,
       marginHorizontal: 16,

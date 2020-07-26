@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import 'react-native-gesture-handler';
 import React from 'react';
 
@@ -99,15 +91,10 @@ function BLEScreens() {
             fontWeight: 'bold',
             color: '#000'
           },
-          headerTintColor: 'white',
-          headerLeft: (props) => (
-            <Icon name="stats-chart-outline" size={20}/>),
+          headerTintColor: 'white'
         }}
     >
-      <Stack.Screen 
-        name="BLEDevices" 
-        component={BLEList} 
-        />
+      <Stack.Screen name="BLEDevices" component={BLEList} />
       <Stack.Screen name="BLEServices" component={BLEservices} />
       <Stack.Screen name="BLECharacteristics" component={BLEservicecharacteristics} />
       <Stack.Screen name="BLECharacteristic" component={BLECharacteristic} />

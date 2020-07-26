@@ -39,10 +39,11 @@ class BLEList extends Component {
                 <TouchableHighlight
                     onPress={() => this.handleClick(item)}
                     style={styles.rowFront}
-                    underlayColor={'#AAA'}
+                    underlayColor={'#DDDDDD'}
                 >
                     <View>
-                        <Text>
+                        <Text
+                        style={{color: 'white', fontWeight: 'bold'}}>
                             Tap to connect to: {item.name}
                         </Text>
                     </View>
@@ -101,9 +102,9 @@ const styles = StyleSheet.create({
   },
   rowFront: {
       alignItems: 'center',
-      backgroundColor: '#CCC',
-      borderBottomColor: 'black',
-      borderBottomWidth: 1,
+      backgroundColor: '#4DA6A6',
+      borderBottomColor: 'white',
+      borderBottomWidth: 4,
       justifyContent: 'center',
       height: 50,
   },
