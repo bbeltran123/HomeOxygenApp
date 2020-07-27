@@ -21,39 +21,32 @@ function Item({ characteristic }) {
     );
   }
 
-function handleClick (ReduxStore,text){
-    ReduxStore.writeCharacteristic(text + '\n');
+function listener(error, characteristic) {
+  console.log(characteristic)
+  return;
+}
+
+function handleClick (characteristic){
+  console.log("Hello there")
+  characteristic.monitor(listener())
 }
 
 function BLEReadcharacteristic(ReduxStore) {
 
-  const [text,setText] = useState({'text':'write something to device'});
+  const [text,setText] = useState({'text':''});
 
     return(
-        <SafeAreaView style={styles.container}>
+        <>
           <Text>{ReduxStore.selectedCharacteristic.uuid}</Text>
-            <FlatList
-                data={[ReduxStore.selectedCharacteristic]}
-                renderItem={({ item }) => 
-                <>
-                <Item characteristic={item} />
-                <TextInput
-                 onChangeText={(text) => setText({text})}
-                  style={{ height: 40, color: 'black', borderColor: 'gray', borderWidth: 1 }}
-                  value={text.text}
-                />
-                <Button
-                  title="Write"
-                  onPress={() => handleClick(ReduxStore,text.text)}
-                ></Button>
-                </>
-                }
-                keyExtractor={item => item.id.toString()}
-                ListEmptyComponent={DataActivityIndicator}
-            />
-        </SafeAreaView>
-    );
+          <Item characteristic={ReduxStore.selectedCharacteristic} />
+          <Button
+            title="Enable Notifications"
+            onPress={() => handleClick(ReduxStore.selectedCharacteristic)}
+          />
+          </>
+  );
 }
+//}
 
 function mapStateToProps(state){
   return{

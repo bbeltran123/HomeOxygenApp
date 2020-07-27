@@ -27,7 +27,7 @@ function handleClick (ReduxStore,text){
 
 function BLEWritecharacteristic(ReduxStore) {
 
-  const [text,setText] = useState({'text':'write something to device'});
+  const [text,setText] = useState({'text':''});
 
     return(
         <>

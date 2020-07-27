@@ -22,7 +22,7 @@ function Item({ characteristic }) {
 
 function handleClick (BLECharacteristic,characteristic){
     // console.log("handleclick:", BLECharacteristic);
-    console.log(ReduxStore)
+    // console.log(ReduxStore)
     BLECharacteristic.selectCharacteristic(characteristic);
     BLECharacteristic.navigation.navigate('BLECharacteristic');
 }

@@ -9,7 +9,7 @@ import BLEReadCharacteristic from './BLEReadCharacteristic';
 import BLEWriteCharacteristic from './BLEWriteCharacteristic';
 
 function BLEcharacteristic(ReduxStore) {
-      if(ReduxStore.selectedCharacteristic.isReadable){
+      if(ReduxStore.selectedCharacteristic.isNotifiable){
         return(<BLEReadCharacteristic />);
       } else if(ReduxStore.selectedCharacteristic.isWritableWithResponse || ReduxStore.selectedCharacteristic.isWritableWithoutResponse){
         return(<BLEWriteCharacteristic />);
