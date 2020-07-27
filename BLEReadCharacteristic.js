@@ -21,14 +21,16 @@ function Item({ characteristic }) {
     );
   }
 
-function listener(error, characteristic) {
-  console.log(characteristic)
-  return;
-}
-
-function handleClick (characteristic){
+function handleClick (readCharacteristic){
   console.log("Hello there")
-  characteristic.monitor(listener())
+  readCharacteristic.monitor((error, characteristic) => {
+    if (error) {
+      console.log(error);
+    }
+    if (characteristic !== null) {
+      console.log(characteristic.uuid)
+    }
+  })
 }
 
 function BLEReadcharacteristic(ReduxStore) {

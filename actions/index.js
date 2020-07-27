@@ -108,7 +108,7 @@ export const getServiceCharacteristics = service => {
     ).then(characteristics => {
       // console.log('characteristics',characteristics)
       dispatch(connectedServiceCharacteristics(characteristics));
-      
+
     });
   };
 };
@@ -199,9 +199,9 @@ export const writeCharacteristic = (text) => {
       // console.log("packet: ", packet)
       let base64packet = Base64.btoa(String.fromCharCode.apply(null, packet));
       console.log("base64 packet: ", base64packet)
-      let newbase64packet = "qhTrAAAAAMY="
+      let deviceInfoPacket = "qhTrAAAAAMY="
       let resetpacket = "qhjnAAAAALs="
-      state.BLEs.connectedDevice.writeCharacteristicWithoutResponseForService(state.BLEs.selectedService.uuid, state.BLEs.selectedCharacteristic.uuid, resetpacket)
+      state.BLEs.connectedDevice.writeCharacteristicWithoutResponseForService(state.BLEs.selectedService.uuid, state.BLEs.selectedCharacteristic.uuid, deviceInfoPacket)
       console.log("\n\n\n")
       console.log(state.BLEs.connectedDevice)
       offset += packetsize;
