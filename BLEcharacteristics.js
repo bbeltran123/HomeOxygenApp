@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaView, View, FlatList, StyleSheet, Text , TextInput,Button} from 'react-native';
-import { writeCharacteristic} from './actions';
+import { writeCharacteristic, modifyHeartRate} from './actions';
 import DataActivityIndicator from './DataActivityIndicator';
 import BLEReadCharacteristic from './BLEReadCharacteristic';
 import BLEWriteCharacteristic from './BLEWriteCharacteristic';

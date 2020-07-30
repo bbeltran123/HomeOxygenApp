@@ -22,6 +22,9 @@ class BLEList extends Component {
   constructor(props){
     super(props);
     this.props.startScan();
+    this.state={
+       HR : '60'
+    }
   }
 
   handleClick = (device) => {

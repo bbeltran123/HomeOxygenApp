@@ -36,6 +36,11 @@ export const changeStatus = (status) => ({
   status: status
 });
 
+export const changeHeartRate = (heartRate) => ({
+  type: "CHANGE_HR",
+  heartRate: heartRate
+});
+
 //some thunks to control the BLE Device
 
 export const startScan = () => {
@@ -75,6 +80,12 @@ const requestLocationPermission = async () => {
     console.warn(err);
     return false;
   }
+};
+
+export const modifyHeartRate = (heartRate) => {
+  return (dispatch, getState, DeviceManager) => {
+    dispatch(changeHeartRate(heartRate))
+  };
 };
 
 export const scan = () => {
@@ -201,7 +212,8 @@ export const writeCharacteristic = (text) => {
       console.log("base64 packet: ", base64packet)
       let deviceInfoPacket = "qhTrAAAAAMY="
       let resetpacket = "qhjnAAAAALs="
-      state.BLEs.connectedDevice.writeCharacteristicWithoutResponseForService(state.BLEs.selectedService.uuid, state.BLEs.selectedCharacteristic.uuid, deviceInfoPacket)
+      let realtimePacket= "qhfoAAAAABs="
+      state.BLEs.connectedDevice.writeCharacteristicWithoutResponseForService(state.BLEs.selectedService.uuid, state.BLEs.selectedCharacteristic.uuid, realtimePacket)
       console.log("\n\n\n")
       console.log(state.BLEs.connectedDevice)
       offset += packetsize;

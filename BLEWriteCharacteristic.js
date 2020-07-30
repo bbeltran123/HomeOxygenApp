@@ -21,12 +21,22 @@ function Item({ characteristic }) {
     );
   }
 
+  function HeartRate({ HR }) {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.title}>{HR}</Text>
+      </View>
+      )
+  }
+
+
+
 function handleClick (ReduxStore,text){
     ReduxStore.writeCharacteristic(text + '\n');
 }
 
 function BLEWritecharacteristic(ReduxStore) {
-
+  var HRString = '60'
   const [text,setText] = useState({'text':''});
 
     return(
@@ -42,6 +52,7 @@ function BLEWritecharacteristic(ReduxStore) {
             title="Write"
             onPress={() => handleClick(ReduxStore,text.text)}
           />
+          <HeartRate HR={ReduxStore.heartRate} />
         </>
     );
     }
@@ -50,6 +61,7 @@ function BLEWritecharacteristic(ReduxStore) {
 function mapStateToProps(state){
   return{
     selectedCharacteristic: state.BLEs.selectedCharacteristic,
+    heartRate: state.BLEs.heartRate
   };
 }
 

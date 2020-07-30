@@ -7,7 +7,8 @@ const INITIAL_STATE = {
   connectedServiceCharacteristics: [],
   selectedService: {},
   selectedCharacteristic: {},
-  status: 'disconnected'
+  status: 'disconnected',
+  heartRate: '0'
 };
 
 const BLEReducer = (state =INITIAL_STATE, action) => {
@@ -33,6 +34,8 @@ const BLEReducer = (state =INITIAL_STATE, action) => {
       return update(state,{connectedServiceCharacteristics: {$set: action.connectedServiceCharacteristics} });
     case 'CHANGE_STATUS':
       return update(state,{status: {$set: action.status} });
+    case 'CHANGE_HR':
+      return update(state,{$HR: {$set: action.heartRate }});  
     default:
       return state;
   }
