@@ -1,72 +1,66 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
-  Animated,
   Dimensions,
-  Image,
   StyleSheet,
   Text,
   FlatList,
-  TouchableOpacity,
   TouchableHighlight,
   View
-} from 'react-native';
-import { Container, Header, Content, Footer } from 'native-base';
-import BLE from './BLE';
-import {connect} from 'react-redux';
-import {connectDevice,startScan} from './actions';
-import DataActivityIndicator from './DataActivityIndicator';
-
+} from 'react-native'
+import { Container, Footer } from 'native-base'
+import BLE from './BLE'
+import { connect } from 'react-redux'
+import { connectDevice, startScan } from './actions'
+import DataActivityIndicator from './DataActivityIndicator'
 
 class BLEList extends Component {
-
-  constructor(props){
-    super(props);
-    this.props.startScan();
+  constructor (props) {
+    super(props)
+    this.props.startScan()
   }
 
-  handleClick = (device) => {
-    this.props.connectDevice(device);
-    this.props.navigation.navigate('BLEServices');
+  handleClick (device) {
+    this.props.connectDevice(device)
+    this.props.navigation.navigate('BLEServices')
   }
 
-  render() {     
+  render () {
     return (
       <Container>
         <FlatList
-                data={this.props.BLEList}
-                renderItem={({ item }) => 
-                <>
-                <TouchableHighlight
-                    onPress={() => this.handleClick(item)}
-                    style={styles.rowFront}
-                    underlayColor={'#DDDDDD'}
-                >
-                    <View>
-                        <Text
-                        style={{color: 'white', fontWeight: 'bold'}}>
+          data={this.props.BLEList}
+          renderItem={({ item }) =>
+            <>
+              <TouchableHighlight
+                onPress={() => this.handleClick(item)}
+                style={styles.rowFront}
+                underlayColor='#DDDDDD'
+              >
+                <View>
+                  <Text
+                    style={{ color: 'white', fontWeight: 'bold' }}
+                  >
                             Tap to connect to: {item.name}
-                        </Text>
-                    </View>
-                </TouchableHighlight>
-                </>
-                }
-                keyExtractor={item => item.id.toString()}
-                ListEmptyComponent={DataActivityIndicator}
-            />
-        
+                  </Text>
+                </View>
+              </TouchableHighlight>
+            </>}
+          keyExtractor={item => item.id.toString()}
+          ListEmptyComponent={DataActivityIndicator}
+        />
 
         <Footer>
-          <BLE></BLE>
+          <BLE />
         </Footer>
       </Container>
-    );
+    )
   }
 }
 
-function mapStateToProps(state){
-  return{
-    BLEList : state.BLEs['BLEList']
-  };
+function mapStateToProps (state) {
+  return {
+    BLEList: state.BLEs.BLEList
+  }
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -76,82 +70,82 @@ const mapDispatchToProps = dispatch => ({
 
 const styles = StyleSheet.create({
   container: {
-      backgroundColor: 'white',
-      flex: 1,
+    backgroundColor: 'white',
+    flex: 1
   },
   standalone: {
-      marginTop: 30,
-      marginBottom: 30,
+    marginTop: 30,
+    marginBottom: 30
   },
   standaloneRowFront: {
-      alignItems: 'center',
-      backgroundColor: '#CCC',
-      justifyContent: 'center',
-      height: 50,
+    alignItems: 'center',
+    backgroundColor: '#CCC',
+    justifyContent: 'center',
+    height: 50
   },
   standaloneRowBack: {
-      alignItems: 'center',
-      backgroundColor: '#8BC645',
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      padding: 15,
+    alignItems: 'center',
+    backgroundColor: '#8BC645',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 15
   },
   backTextWhite: {
-      color: '#FFF',
+    color: '#FFF'
   },
   rowFront: {
-      alignItems: 'center',
-      backgroundColor: '#4DA6A6',
-      borderBottomColor: 'white',
-      borderBottomWidth: 4,
-      justifyContent: 'center',
-      height: 50,
+    alignItems: 'center',
+    backgroundColor: '#4DA6A6',
+    borderBottomColor: 'white',
+    borderBottomWidth: 4,
+    justifyContent: 'center',
+    height: 50
   },
   rowBack: {
-      alignItems: 'center',
-      backgroundColor: '#DDD',
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      paddingLeft: 15,
+    alignItems: 'center',
+    backgroundColor: '#DDD',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 15
   },
   backRightBtn: {
-      alignItems: 'center',
-      bottom: 0,
-      justifyContent: 'center',
-      position: 'absolute',
-      top: 0,
-      width: 75,
+    alignItems: 'center',
+    bottom: 0,
+    justifyContent: 'center',
+    position: 'absolute',
+    top: 0,
+    width: 75
   },
   backRightBtnLeft: {
-      backgroundColor: 'blue',
-      right: 75,
+    backgroundColor: 'blue',
+    right: 75
   },
   backRightBtnRight: {
-      backgroundColor: 'red',
-      right: 0,
+    backgroundColor: 'red',
+    right: 0
   },
   controls: {
-      alignItems: 'center',
-      marginBottom: 30,
+    alignItems: 'center',
+    marginBottom: 30
   },
   switchContainer: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      marginBottom: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 5
   },
   switch: {
-      alignItems: 'center',
-      borderWidth: 1,
-      borderColor: 'black',
-      paddingVertical: 10,
-      width: Dimensions.get('window').width / 4,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'black',
+    paddingVertical: 10,
+    width: Dimensions.get('window').width / 4
   },
   trash: {
-      height: 25,
-      width: 25,
-  },
-});
+    height: 25,
+    width: 25
+  }
+})
 
-export default connect(mapStateToProps,mapDispatchToProps)(BLEList);
+export default connect(mapStateToProps, mapDispatchToProps)(BLEList)
