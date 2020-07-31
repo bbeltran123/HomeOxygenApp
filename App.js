@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { createStore,applyMiddleware } from 'redux';
 import rootReducer from './reducers/index';
 import thunk from 'redux-thunk';
+import Routes from './Routes'
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -37,6 +38,7 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { AuthProvider } from './AuthProvider';
 
 const DeviceManager = new BleManager();
 
@@ -113,9 +115,9 @@ const App: () => React$Node = () => {
   return (
     <>
       <Provider store={ store }>
-        <NavigationContainer>
-          <MyTabs />
-        </NavigationContainer>
+          <AuthProvider>
+            <Routes />
+          </AuthProvider>
       </Provider>
     </>
   );
