@@ -114,10 +114,19 @@ export const getServiceCharacteristics = service => {
 
 export const disconnectDevice = (device, doneAction = () => {}) => {
   return (dispatch) => {
-    device.cancelConnection().then(() => {
-      dispatch(changeStatus('Scanning'))
-      dispatch(connectedDevice({}))
-      doneAction()
+    device.isConnected().then(isConnected => {
+      // if cancelling while still trying to connnect
+      if (!isConnected) {
+        dispatch(changeStatus('Scanning'))
+        dispatch(connectedDevice({}))
+        doneAction()
+      } else {
+        device.cancelConnection().then(() => {
+          dispatch(changeStatus('Scanning'))
+          dispatch(connectedDevice({}))
+          doneAction()
+        })
+      }
     })
   }
 }
@@ -125,13 +134,13 @@ export const disconnectDevice = (device, doneAction = () => {}) => {
 export const connectDevice = (device) => {
   return (dispatch, getState, DeviceManager) => {
     dispatch(changeStatus('Connecting'))
+    dispatch(connectedDevice(device))
     DeviceManager.stopDeviceScan()
     device
       .connect()
       .then((device) => {
         dispatch(changeStatus('Discovering'))
         const allCharacteristics = device.discoverAllServicesAndCharacteristics()
-        dispatch(connectedDevice(device))
         return allCharacteristics
       })
       .then((device) => {
@@ -142,7 +151,7 @@ export const connectDevice = (device) => {
         // console.log("found services: ", services)
         dispatch(connectedDeviceServices(services))
       }, (error) => {
-        console.log(this._logError('SCAN', error))
+        console.log(error)
       })
   }
 }
