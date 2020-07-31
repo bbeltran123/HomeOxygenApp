@@ -1,7 +1,7 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
 
-import BLEReducer from './BLEReducer';
+import BLEReducer from './BLEReducer'
 
 export default combineReducers({
-    BLEs: BLEReducer,
-  });
+  BLEs: BLEReducer
+})

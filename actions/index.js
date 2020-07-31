@@ -87,9 +87,9 @@ export const scan = () => {
           console.log(error)
         }
         if (device !== null) {
-          if (device.name === 'O2Ring 6598') {
-            dispatch(addBLE(device))
-          }
+          // if (device.name === 'O2Ring 6598') {
+          dispatch(addBLE(device))
+          // }
         }
       })
     } else {
@@ -108,6 +108,16 @@ export const getServiceCharacteristics = service => {
     ).then(characteristics => {
       // console.log('characteristics',characteristics)
       dispatch(connectedServiceCharacteristics(characteristics))
+    })
+  }
+}
+
+export const disconnectDevice = (device, doneAction = () => {}) => {
+  return (dispatch) => {
+    device.cancelConnection().then(() => {
+      dispatch(changeStatus('Scanning'))
+      dispatch(connectedDevice({}))
+      doneAction()
     })
   }
 }
