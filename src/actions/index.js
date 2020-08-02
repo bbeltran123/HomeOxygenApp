@@ -1,4 +1,4 @@
-import Base64 from '../Base64'
+import Base64 from '../utils/Base64'
 import { PermissionsAndroid, Platform } from 'react-native'
 
 export const addBLE = (device) => ({

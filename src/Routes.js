@@ -4,16 +4,17 @@ import auth from '@react-native-firebase/auth'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 // import SignupScreen from '../screens/SignupScreen';
-import LoginScreen from './LoginScreen'
+import LoginScreen from './screens/LoginScreen'
 import Icon from 'react-native-vector-icons/Ionicons'
-import BLEList from './BLElist'
-import BLEservices from './BLEservices'
-import BLEservicecharacteristics from './BLEservicecharacteristics'
-import BLECharacteristic from './BLEcharacteristics'
+import BLEList from './screens/BLE/BLElist'
+import BLEservices from './screens/BLE/BLEservices'
+import BLEservicecharacteristics from './screens/BLE/BLEservicecharacteristics'
+import BLECharacteristic from './screens/BLE/BLEcharacteristics'
 import { AuthContext } from './AuthProvider'
 import Loading from './components/Loading'
-import Home from './Home'
-import Data from './Data'
+import SignupScreen from './screens/SignupScreen'
+import Home from './screens/Home'
+import Data from './screens/Data'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -26,7 +27,9 @@ function AuthStack () {
         component={LoginScreen}
         options={{ header: () => null }}
       />
-      {/* <Stack.Screen name='Signup' component={SignupScreen} /> */}
+      <Stack.Screen
+        name='Signup' component={SignupScreen} options={{ header: () => null }}
+      />
     </Stack.Navigator>
   )
 }

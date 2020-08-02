@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { View, StyleSheet, Text, Button } from 'react-native'
-import { writeCharacteristic } from './actions'
+import { writeCharacteristic } from '../../actions'
 
 function Item ({ characteristic }) {
   return (

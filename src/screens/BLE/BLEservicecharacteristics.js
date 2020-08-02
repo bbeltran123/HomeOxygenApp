@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { SafeAreaView, View, FlatList, StyleSheet, Text, TouchableHighlight } from 'react-native'
-import { selectedCharacteristic, getServiceCharacteristics } from './actions'
-import DataActivityIndicator from './DataActivityIndicator'
+import { selectedCharacteristic, getServiceCharacteristics } from '../../actions'
+import DataActivityIndicator from '../../components/DataActivityIndicator'
 
 function Item ({ characteristic }) {
   return (

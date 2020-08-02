@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Container, Text } from 'native-base'
-import { addBLE } from './actions/index'
+import { addBLE } from '../../actions'
 
 class BLE extends React.Component {
   render () {
