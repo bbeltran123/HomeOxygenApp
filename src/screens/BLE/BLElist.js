@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import { Container, Footer } from 'native-base'
 import BLE from './BLE'
-import { connect, useSelector } from 'react-redux'
+import { connect, useSelector, useDispatch } from 'react-redux'
 import { connectDevice, startScan } from '../../actions'
 import DataActivityIndicator from '../../components/DataActivityIndicator'
 import { AuthContext } from '../../AuthProvider'
@@ -20,7 +20,7 @@ const BLEList = (props) => {
   })
 
   const handleClick = (device) => {
-    connectDevice(device)
+    props.connectDevice(device)
     props.navigation.navigate('BLEServices')
   }
 
