@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { SafeAreaView, View, FlatList, StyleSheet, Text, TouchableHighlight } from 'react-native'
-import { selectedService } from './../../actions'
+import { selectedService, disconnectDevice } from './../../actions'
 import DataActivityIndicator from './../../components/DataActivityIndicator'
 
 function Item ({ service }) {
@@ -16,6 +16,11 @@ function Item ({ service }) {
 function handleClick (BLEServices, serviceId) {
   BLEServices.selectedService(serviceId)
   BLEServices.navigation.navigate('BLECharacteristics')
+}
+
+function handleDisconnect (device, disconnectAction, navigation) {
+  disconnectAction(device)
+  navigation.navigate('BLEDevices')
 }
 
 function BLEservices (BLEServices) {
@@ -34,6 +39,20 @@ function BLEservices (BLEServices) {
         keyExtractor={item => item.id.toString()}
         ListEmptyComponent={DataActivityIndicator}
       />
+      <TouchableHighlight
+        onPress={() =>
+          handleDisconnect(BLEServices.connectedDevice, BLEServices.disconnectDevice, BLEServices.navigation)}
+        style={styles.rowFront}
+        underlayColor='#AAA'
+      >
+        <View style={styles.item}>
+          <Text
+            style={{ color: 'white', fontWeight: 'bold' }}
+          >
+                    Tap to disconnect
+          </Text>
+        </View>
+      </TouchableHighlight>
     </SafeAreaView>
   )
 }
@@ -41,12 +60,14 @@ function BLEservices (BLEServices) {
 
 function mapStateToProps (state) {
   return {
-    connectedDeviceServices: state.BLEs.connectedDeviceServices
+    connectedDeviceServices: state.BLEs.connectedDeviceServices,
+    connectedDevice: state.BLEs.connectedDevice
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  selectedService: service => dispatch(selectedService(service))
+  selectedService: service => dispatch(selectedService(service)),
+  disconnectDevice: device => dispatch(disconnectDevice(device))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(BLEservices)
