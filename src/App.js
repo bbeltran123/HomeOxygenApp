@@ -5,17 +5,18 @@ import { Provider } from 'react-redux';
 import { createStore,applyMiddleware } from 'redux';
 import rootReducer from './reducers/index';
 import thunk from 'redux-thunk';
+import Routes from './Routes'
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {BleManager} from 'react-native-ble-plx';
 
-import Home from './Home'
-import Data from './Data'
-import BLEList from './BLElist';
-import BLEservices from './BLEservices'
-import BLEservicecharacteristics from './BLEservicecharacteristics'
-import BLECharacteristic from './BLEcharacteristics'
+import Home from './screens/Home'
+import Data from './screens/Data'
+import BLEList from './screens/BLE/BLElist';
+import BLEservices from './screens/BLE/BLEservices'
+import BLEservicecharacteristics from './screens/BLE/BLEservicecharacteristics'
+import BLECharacteristic from './screens/BLE/BLEcharacteristics'
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import {
@@ -37,6 +38,7 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { AuthProvider } from './AuthProvider';
 
 const DeviceManager = new BleManager();
 
@@ -113,9 +115,9 @@ const App: () => React$Node = () => {
   return (
     <>
       <Provider store={ store }>
-        <NavigationContainer>
-          <MyTabs />
-        </NavigationContainer>
+          <AuthProvider>
+            <Routes />
+          </AuthProvider>
       </Provider>
     </>
   );
