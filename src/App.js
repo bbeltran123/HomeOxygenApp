@@ -15,6 +15,7 @@ import Home from './screens/Home'
 import Data from './screens/Data'
 import BLEList from './screens/BLE/BLElist';
 import BLEservices from './screens/BLE/BLEservices'
+import BLESelectedDeviceScreen from './screens/BLE/BLESelectedDeviceScreen'
 import BLEservicecharacteristics from './screens/BLE/BLEservicecharacteristics'
 import BLECharacteristic from './screens/BLE/BLEcharacteristics'
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -97,6 +98,7 @@ function BLEScreens() {
         }}
     >
       <Stack.Screen name="BLEDevices" component={BLEList} />
+      <Stack.Screen name="selectedScreen" component={BLESelectedDeviceScreen} />
       <Stack.Screen name="BLEServices" component={BLEservices} />
       <Stack.Screen name="BLECharacteristics" component={BLEservicecharacteristics} />
       <Stack.Screen name="BLECharacteristic" component={BLECharacteristic} />

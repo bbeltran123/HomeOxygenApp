@@ -10,7 +10,7 @@ import {
 import { Container, Footer } from 'native-base'
 import BLE from './BLE'
 import { connect, useSelector, useDispatch } from 'react-redux'
-import { connectDevice, startScan } from '../../actions'
+import { connectDevice, connectDeviceCompletely, startScan } from '../../actions'
 import DataActivityIndicator from '../../components/DataActivityIndicator'
 import { AuthContext } from '../../AuthProvider'
 
@@ -20,7 +20,7 @@ const BLEList = (props) => {
   })
 
   const handleClick = (device) => {
-    props.connectDevice(device)
+    props.connectDeviceCompletely(device)
     props.navigation.navigate('BLEServices')
   }
 
@@ -81,6 +81,7 @@ function mapStateToProps (state) {
 
 const mapDispatchToProps = dispatch => ({
   connectDevice: device => dispatch(connectDevice(device)),
+  connectDeviceCompletely: device => dispatch(connectDeviceCompletely(device)),
   startScan: () => dispatch(startScan())
 })
 

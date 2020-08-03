@@ -1,8 +1,17 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { SafeAreaView, View, FlatList, StyleSheet, Text, TouchableHighlight } from 'react-native'
-import { selectedService, disconnectDevice } from './../../actions'
+import { connect, useSelector} from 'react-redux'
+import Base64 from '../../utils/Base64';
+import { SafeAreaView, View, FlatList, StyleSheet, Text, TouchableHighlight, Button } from 'react-native'
+import { selectedService, disconnectDevice, writeCharacteristic, changeHeartRate } from './../../actions'
 import DataActivityIndicator from './../../components/DataActivityIndicator'
+
+function O2Data({ data }) {
+return (
+  <View style={styles.item}>
+    <Text style={styles.title}>{data}</Text>
+  </View>
+  )
+}
 
 function Item ({ service }) {
   return (
@@ -13,9 +22,39 @@ function Item ({ service }) {
   )
 }
 
-function handleClick (BLEServices, serviceId) {
-  BLEServices.selectedService(serviceId)
-  BLEServices.navigation.navigate('BLECharacteristics')
+function base64ToHex(str) {
+  const raw = Base64.atob(str);
+  let result = '';
+  for (let i = 0; i < raw.length; i++) {
+    const hex = raw.charCodeAt(i).toString(16);
+    result += (hex.length === 2 ? hex : '0' + hex);
+  }
+  return result.toUpperCase();
+}
+
+function handleClick (heartRate, BLERead, BLEServices) {
+  var dataArr = []
+  console.log("Hello there")
+  BLERead.monitor((error, characteristic) => {
+  if (error) {
+    console.log("ERROR!!")
+    console.log(error);
+  }
+  if (characteristic !== null) {
+    dataArr.push(characteristic.value)
+    console.log('printing characteristic value', characteristic.value)
+  }    
+  console.log("Characteristic written back!")
+  console.log(base64ToHex(dataArr[0]))
+  var hexString = base64ToHex(dataArr[0])
+  var HR = (parseInt(hexString.charAt(16), 10)*16) + parseInt((hexString.charAt[17], 10))
+  console.log("Heart Rate", HR)
+  console.log("before state Heart Rate", heartRate)
+  BLEServices.changeHeartRate(HR)
+  console.log("after state Heart Rate", heartRate)
+  // console.log(Base64.atob(message))
+  })
+  BLEServices.writeCharacteristic("text")
 }
 
 function handleDisconnect (device, disconnectAction, navigation) {
@@ -24,21 +63,18 @@ function handleDisconnect (device, disconnectAction, navigation) {
 }
 
 function BLEservices (BLEServices) {
+  const BLEReadCharacteristic = useSelector(state => state.BLEs.readCharacteristic)
+  const BLEWriteCharacteristic = useSelector(state => state.BLEs.writeCharacteristic)
+  const heartRate  = useSelector(state => state.BLEs.heartRate)
+
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        data={BLEServices.connectedDeviceServices}
-        renderItem={({ item }) =>
-          <TouchableHighlight
-            onPress={() => handleClick(BLEServices, item)}
-            style={styles.rowFront}
-            underlayColor='#AAA'
-          >
-            <Item service={item} />
-          </TouchableHighlight>}
-        keyExtractor={item => item.id.toString()}
-        ListEmptyComponent={DataActivityIndicator}
+      <Button
+        title='read O2 Ring'
+            onPress={() => handleClick(heartRate, BLEReadCharacteristic, BLEServices)}
       />
+      <O2Data data={heartRate}/>
+
       <TouchableHighlight
         onPress={() =>
           handleDisconnect(BLEServices.connectedDevice, BLEServices.disconnectDevice, BLEServices.navigation)}
@@ -67,7 +103,9 @@ function mapStateToProps (state) {
 
 const mapDispatchToProps = dispatch => ({
   selectedService: service => dispatch(selectedService(service)),
-  disconnectDevice: device => dispatch(disconnectDevice(device))
+  disconnectDevice: device => dispatch(disconnectDevice(device)),
+  writeCharacteristic: text => dispatch(writeCharacteristic(text)),
+  changeHeartRate: heartRate => dispatch(changeHeartRate(heartRate))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(BLEservices)

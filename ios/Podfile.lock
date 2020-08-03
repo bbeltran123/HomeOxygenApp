@@ -319,8 +319,8 @@ DEPENDENCIES:
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
-  - "RNFBApp (from `../../../node_modules/@react-native-firebase/app`)"
-  - "RNFBAuth (from `../../../node_modules/@react-native-firebase/auth`)"
+  - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
+  - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -399,9 +399,9 @@ EXTERNAL SOURCES:
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
   RNFBApp:
-    :path: "../../../node_modules/@react-native-firebase/app"
+    :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
-    :path: "../../../node_modules/@react-native-firebase/auth"
+    :path: "../node_modules/@react-native-firebase/auth"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
@@ -465,4 +465,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 6aab545ad5a79cf67d71322a572bf61a46aa81d1
 
-COCOAPODS: 1.9.0
+COCOAPODS: 1.9.3

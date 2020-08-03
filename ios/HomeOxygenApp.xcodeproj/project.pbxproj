@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* HomeOxygenAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* HomeOxygenAppTests.m */; };
-		032BF34C24D6C44D000E67E1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 032BF34B24D6C44D000E67E1 /* GoogleService-Info.plist */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -24,6 +23,7 @@
 		43C9AAD2083036913D1F0396 /* libPods-HomeOxygenApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C0C246F1C2EEEF7FE88FDD7 /* libPods-HomeOxygenApp.a */; };
 		99391F8ED17BEE78E59A3413 /* libPods-HomeOxygenApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 323879B0FB2E4ECB1E690EB6 /* libPods-HomeOxygenApp-tvOS.a */; };
 		A6F7A0256719F736B0579573 /* libPods-HomeOxygenAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9C68FCFC4AF49E398EFF6B4 /* libPods-HomeOxygenAppTests.a */; };
+		CF4B620D24D755AE00C3AB41 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF4B620C24D755AE00C3AB41 /* GoogleService-Info.plist */; };
 		F8B73A2C4CA027088814119B /* libPods-HomeOxygenApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF009C6D7E478213E7A042EC /* libPods-HomeOxygenApp-tvOSTests.a */; };
 /* End PBXBuildFile section */
 
@@ -49,7 +49,6 @@
 		00E356EE1AD99517003FC87E /* HomeOxygenAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HomeOxygenAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* HomeOxygenAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeOxygenAppTests.m; sourceTree = "<group>"; };
-		032BF34B24D6C44D000E67E1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0964A9E61D64F533AD806F58 /* Pods-HomeOxygenAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HomeOxygenAppTests.release.xcconfig"; path = "Target Support Files/Pods-HomeOxygenAppTests/Pods-HomeOxygenAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		0E001B2D29FDF4C898D1E98F /* Pods-HomeOxygenApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HomeOxygenApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-HomeOxygenApp-tvOS/Pods-HomeOxygenApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* HomeOxygenApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HomeOxygenApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,6 +73,7 @@
 		83C23A8A229B09D0B5BFC648 /* Pods-HomeOxygenApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HomeOxygenApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-HomeOxygenApp-tvOSTests/Pods-HomeOxygenApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		9D5394178D0C6DA393FBE9EB /* Pods-HomeOxygenApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HomeOxygenApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-HomeOxygenApp-tvOS/Pods-HomeOxygenApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		CF009C6D7E478213E7A042EC /* libPods-HomeOxygenApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HomeOxygenApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF4B620C24D755AE00C3AB41 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F053045C3F8254F69E419CE5 /* Pods-HomeOxygenApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HomeOxygenApp.debug.xcconfig"; path = "Target Support Files/Pods-HomeOxygenApp/Pods-HomeOxygenApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -170,8 +170,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				CF4B620C24D755AE00C3AB41 /* GoogleService-Info.plist */,
 				2E313A402403742A00B97012 /* poledialink.swift */,
-				032BF34B24D6C44D000E67E1 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* HomeOxygenApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* HomeOxygenAppTests */,
@@ -308,12 +308,12 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = 6R86SHCH3N;
+						DevelopmentTeam = 8FDY9YX5JQ;
 						LastSwiftMigration = 1130;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 6R86SHCH3N;
+						DevelopmentTeam = 8FDY9YX5JQ;
 						LastSwiftMigration = 1130;
 						ProvisioningStyle = Automatic;
 					};
@@ -368,7 +368,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				032BF34C24D6C44D000E67E1 /* GoogleService-Info.plist in Resources */,
+				CF4B620D24D755AE00C3AB41 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -678,7 +678,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 6R86SHCH3N;
+				DEVELOPMENT_TEAM = 8FDY9YX5JQ;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -708,7 +708,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = 6R86SHCH3N;
+				DEVELOPMENT_TEAM = 8FDY9YX5JQ;
 				INFOPLIST_FILE = HomeOxygenAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -735,7 +735,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 6R86SHCH3N;
+				DEVELOPMENT_TEAM = 8FDY9YX5JQ;
 				INFOPLIST_FILE = HomeOxygenApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -762,7 +762,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6R86SHCH3N;
+				DEVELOPMENT_TEAM = 8FDY9YX5JQ;
 				INFOPLIST_FILE = HomeOxygenApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
