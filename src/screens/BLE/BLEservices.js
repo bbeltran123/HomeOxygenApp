@@ -2,13 +2,21 @@ import React from 'react'
 import { connect, useSelector} from 'react-redux'
 import Base64 from '../../utils/Base64';
 import { SafeAreaView, View, FlatList, StyleSheet, Text, TouchableHighlight, Button } from 'react-native'
-import { selectedService, disconnectDevice, writeCharacteristic, changeHeartRate } from './../../actions'
+import { selectedService, disconnectDevice, writeCharacteristic, changeHeartRate, changeSPO2 } from './../../actions'
 import DataActivityIndicator from './../../components/DataActivityIndicator'
 
-function O2Data({ data }) {
+function HeartRateData({ data}) {
 return (
   <View style={styles.item}>
-    <Text style={styles.title}>{data}</Text>
+    <Text style={styles.title}>Heart Rate: {data - 8}</Text>
+  </View>
+  )
+}
+
+function SPO2Data({ data}) {
+return (
+  <View style={styles.item}>
+    <Text style={styles.title}>SPO2: {data+4}</Text>
   </View>
   )
 }
@@ -47,11 +55,11 @@ function handleClick (heartRate, BLERead, BLEServices) {
   console.log("Characteristic written back!")
   console.log(base64ToHex(dataArr[0]))
   var hexString = base64ToHex(dataArr[0])
+  var SPO2 = (parseInt(hexString.charAt(14), 10)*16) + parseInt((hexString.charAt[15], 10))
   var HR = (parseInt(hexString.charAt(16), 10)*16) + parseInt((hexString.charAt[17], 10))
   console.log("Heart Rate", HR)
-  console.log("before state Heart Rate", heartRate)
+  BLEServices.changeSPO2(SPO2)
   BLEServices.changeHeartRate(HR)
-  console.log("after state Heart Rate", heartRate)
   // console.log(Base64.atob(message))
   })
   BLEServices.writeCharacteristic("text")
@@ -65,7 +73,8 @@ function handleDisconnect (device, disconnectAction, navigation) {
 function BLEservices (BLEServices) {
   const BLEReadCharacteristic = useSelector(state => state.BLEs.readCharacteristic)
   const BLEWriteCharacteristic = useSelector(state => state.BLEs.writeCharacteristic)
-  const heartRate  = useSelector(state => state.BLEs.heartRate)
+  const heartRate = useSelector(state => state.BLEs.heartRate)
+  const SPO2 = useSelector(state => state.BLEs.SPO2)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -73,7 +82,8 @@ function BLEservices (BLEServices) {
         title='read O2 Ring'
             onPress={() => handleClick(heartRate, BLEReadCharacteristic, BLEServices)}
       />
-      <O2Data data={heartRate}/>
+      <HeartRateData data={ heartRate}/>
+      <SPO2Data data={SPO2}/>
 
       <TouchableHighlight
         onPress={() =>
@@ -105,7 +115,8 @@ const mapDispatchToProps = dispatch => ({
   selectedService: service => dispatch(selectedService(service)),
   disconnectDevice: device => dispatch(disconnectDevice(device)),
   writeCharacteristic: text => dispatch(writeCharacteristic(text)),
-  changeHeartRate: heartRate => dispatch(changeHeartRate(heartRate))
+  changeHeartRate: heartRate => dispatch(changeHeartRate(heartRate)),
+  changeSPO2: SPO2 => dispatch(changeSPO2(SPO2))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(BLEservices)

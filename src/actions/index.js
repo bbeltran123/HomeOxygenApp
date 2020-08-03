@@ -41,6 +41,11 @@ export const changeHeartRate = (heartRate) => ({
   heartRate: heartRate
 })
 
+export const changeSPO2 = (SPO2) => ({
+  type: 'CHANGE_SPO2',
+  SPO2: SPO2
+})
+
 export const changeReadCharacteristic = (readCharacteristic) => ({
   type: 'CHANGE_READCHARACTERISTIC',
   readCharacteristic: readCharacteristic

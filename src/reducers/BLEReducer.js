@@ -9,7 +9,8 @@ const INITIAL_STATE = {
   selectedCharacteristic: {},
   readCharacteristic: {},
   writeCharacteristic: {},
-  heartRate: 0,
+  heartRate: 8,
+  SPO2: -4,
   status: 'disconnected'
 }
 
@@ -42,6 +43,8 @@ const BLEReducer = (state = INITIAL_STATE, action) => {
       return update(state, { status: { $set: action.status } })
     case 'CHANGE_HEARTRATE':
       return update(state, { heartRate: { $set: action.heartRate } })
+    case 'CHANGE_SPO2':
+      return update(state, { SPO2: { $set: action.SPO2 } })      
     case 'CHANGE_READCHARACTERISTIC':
       return update(state, { readCharacteristic: { $set: action.readCharacteristic } })
     case 'CHANGE_WRITECHARACTERISTIC':
