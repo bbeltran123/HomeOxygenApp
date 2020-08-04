@@ -41,28 +41,28 @@ function base64ToHex(str) {
 }
 
 function handleClick (heartRate, BLERead, BLEServices) {
+  //
   var dataArr = []
-  console.log("Hello there")
   BLERead.monitor((error, characteristic) => {
+    console.log("notifications enabled")
   if (error) {
-    console.log("ERROR!!")
+    console.log("error")
     console.log(error);
   }
   if (characteristic !== null) {
+    console.log("characteristic written back")
+    console.log("\n\n\n")
     dataArr.push(characteristic.value)
-    console.log('printing characteristic value', characteristic.value)
   }    
-  console.log("Characteristic written back!")
-  console.log(base64ToHex(dataArr[0]))
+  console.log(dataArr.length)
   var hexString = base64ToHex(dataArr[0])
+  console.log(hexString)
   var SPO2 = (parseInt(hexString.charAt(14), 10)*16) + parseInt((hexString.charAt[15], 10))
   var HR = (parseInt(hexString.charAt(16), 10)*16) + parseInt((hexString.charAt[17], 10))
-  console.log("Heart Rate", HR)
   BLEServices.changeSPO2(SPO2)
   BLEServices.changeHeartRate(HR)
-  // console.log(Base64.atob(message))
   })
-  BLEServices.writeCharacteristic("text")
+  BLEServices.writeCharacteristic()
 }
 
 function handleDisconnect (device, disconnectAction, navigation) {
@@ -107,7 +107,9 @@ function BLEservices (BLEServices) {
 function mapStateToProps (state) {
   return {
     connectedDeviceServices: state.BLEs.connectedDeviceServices,
-    connectedDevice: state.BLEs.connectedDevice
+    connectedDevice: state.BLEs.connectedDevice,
+    heartRate: state.BLEs.heartRate,
+    SPO2: state.BLEs.SPO2
   }
 }
 

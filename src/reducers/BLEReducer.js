@@ -9,8 +9,8 @@ const INITIAL_STATE = {
   selectedCharacteristic: {},
   readCharacteristic: {},
   writeCharacteristic: {},
-  heartRate: 8,
-  SPO2: -4,
+  heartRate: 0,
+  SPO2: 0,
   status: 'disconnected'
 }
 

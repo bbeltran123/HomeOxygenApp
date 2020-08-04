@@ -48,7 +48,7 @@ const handleClick = (readChar, writeChar) => {
 }
 
 
-function BLESelectedDeviceScreen() {
+function BLESelectedDeviceScreen(services) {
 	const BLEReadCharacteristic = useSelector(state => state.BLEs.readCharacteristic)
 	const BLEWriteCharacteristic = useSelector(state => state.BLEs.writeCharacteristic)
 	const heartRate  = useSelector(state => state.BLEs.heartRate)

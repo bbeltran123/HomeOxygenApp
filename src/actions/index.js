@@ -219,16 +219,6 @@ export const connectDeviceCompletely = (device) => {
         console.log(error)
       })
 
-    const state = getState()
-    console.log('state', state)
-
-    DeviceManager.readCharacteristicForDevice(
-      state.BLEs.connectedDevice.id,
-      state.BLEs.selectedCharacteristic.uuid,
-      "0734594A-A8E7-4B1A-A6B1-CD5243059A57"
-    ).then(characteristic => {
-      console.log(characteristics)
-    })
       
   }  
 }
@@ -276,30 +266,14 @@ function str2ab (str) {
   return bufView
 }
 
-export const writeCharacteristic = (text) => {
+export const writeCharacteristic = () => {
   return (dispatch, getState, DeviceManager) => {
     const state = getState()
-    console.log("INSIDE WRITE IN ACTION")
-    // console.log(state.BLEs.connectedDevice)
-    const buffer = str2ab(text)
-    const packetsize = 20
-    let offset = 0
-    let packetlength = packetsize
-    do {
-      if (offset + packetsize > buffer.length) {
-        packetlength = buffer.length
-      } else {
-        packetlength = offset + packetsize
-      }
-      const packet = buffer.slice(offset, packetlength)
-      // console.log("packet: ", packet)
-      const base64packet = Base64.btoa(String.fromCharCode.apply(null, packet))
-      console.log('base64 packet: ', base64packet)
-      const deviceInfoPacket = 'qhTrAAAAAMY='
-      // const resetpacket = 'qhjnAAAAALs='
-      const realTimePacket = 'qhfoAAAAABs='
-      state.BLEs.connectedDevice.writeCharacteristicWithoutResponseForService(state.BLEs.selectedService.uuid, state.BLEs.writeCharacteristic.uuid, realTimePacket)
-      offset += packetsize
-    } while (offset < buffer.length)
+    // console.log("packet: ", packet)
+    const deviceInfoPacket = 'qhTrAAAAAMY='
+    // const resetpacket = 'qhjnAAAAALs='
+    const realTimePacket = 'qhfoAAAAABs='
+    const realTimeWaveform = 'qhvkAAABAHM='
+    state.BLEs.connectedDevice.writeCharacteristicWithoutResponseForService(state.BLEs.selectedService.uuid, state.BLEs.writeCharacteristic.uuid, realTimePacket)
   }
 }
