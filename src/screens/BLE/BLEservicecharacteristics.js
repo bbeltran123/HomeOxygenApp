@@ -1,14 +1,14 @@
 import React from 'react'
-import { connect, useSelector, useDispatch } from 'react-redux'
-import { SafeAreaView, View, FlatList, StyleSheet, Text, TouchableHighlight } from 'react-native'
+import { useSelector, useDispatch } from 'react-redux'
+import { SafeAreaView, FlatList, StyleSheet, TouchableHighlight } from 'react-native'
 import { selectedCharacteristic, getServiceCharacteristics } from '../../actions'
 import DataActivityIndicator from '../../components/DataActivityIndicator'
 import { CharacteristicItem } from './BLEReadCharacteristic'
 
 const BLEservicecharacteristics = (props) => {
-  const { BLEService, BLEServiceCharacteristics} = useSelector(state => state.BLEs)
+  const { BLEService, BLEServiceCharacteristics } = useSelector(state => state.BLEs)
   const dispatch = useDispatch()
-  
+
   dispatch(getServiceCharacteristics(BLEService))
   return (
     <SafeAreaView style={styles.container}>
@@ -18,7 +18,7 @@ const BLEservicecharacteristics = (props) => {
           <TouchableHighlight
             onPress={() => {
               dispatch(selectedCharacteristic(item))
-              navigation.navigate('BLECharacteristic')
+              props.navigation.navigate('BLECharacteristic')
             }}
             style={styles.rowFront}
             underlayColor='#AAA'
