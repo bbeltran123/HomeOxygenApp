@@ -1,10 +1,10 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { SafeAreaView, View, FlatList, StyleSheet, Text, TouchableHighlight } from 'react-native'
 import { selectedService, disconnectDevice } from './../../actions'
 import DataActivityIndicator from './../../components/DataActivityIndicator'
 
-function Item ({ service }) {
+const ServiceItem = ({ service }) => {
   return (
     <View style={styles.item}>
       <Text style={styles.title}>{service.uuid}</Text>
@@ -13,35 +13,37 @@ function Item ({ service }) {
   )
 }
 
-function handleClick (BLEServices, serviceId) {
-  BLEServices.selectedService(serviceId)
-  BLEServices.navigation.navigate('BLECharacteristics')
-}
+const BLEservices = (props) => {
+  const { connectedDeviceServices, connectedDevice } = useSelector(state => state.BLEs)
+  const dispatch = useDispatch()
 
-function handleDisconnect (device, disconnectAction, navigation) {
-  disconnectAction(device)
-  navigation.navigate('BLEDevices')
-}
+  const onServiceSelected = (service) => {
+    dispatch(selectedService(service))
+    props.navigation.navigate('BLECharacteristics')
+  }
 
-function BLEservices (BLEServices) {
+  const handleDisconnect = () => {
+    dispatch(disconnectDevice(connectedDevice))
+    props.navigation.navigate('BLEDevices')
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={BLEServices.connectedDeviceServices}
+        data={connectedDeviceServices}
         renderItem={({ item }) =>
           <TouchableHighlight
-            onPress={() => handleClick(BLEServices, item)}
+            onPress={() => onServiceSelected(item)}
             style={styles.rowFront}
             underlayColor='#AAA'
           >
-            <Item service={item} />
+            <ServiceItem service={item} />
           </TouchableHighlight>}
         keyExtractor={item => item.id.toString()}
         ListEmptyComponent={DataActivityIndicator}
       />
       <TouchableHighlight
-        onPress={() =>
-          handleDisconnect(BLEServices.connectedDevice, BLEServices.disconnectDevice, BLEServices.navigation)}
+        onPress={handleDisconnect}
         style={styles.rowFront}
         underlayColor='#AAA'
       >
@@ -56,21 +58,6 @@ function BLEservices (BLEServices) {
     </SafeAreaView>
   )
 }
-// }
-
-function mapStateToProps (state) {
-  return {
-    connectedDeviceServices: state.BLEs.connectedDeviceServices,
-    connectedDevice: state.BLEs.connectedDevice
-  }
-}
-
-const mapDispatchToProps = dispatch => ({
-  selectedService: service => dispatch(selectedService(service)),
-  disconnectDevice: device => dispatch(disconnectDevice(device))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(BLEservices)
 
 const styles = StyleSheet.create({
   container: {
@@ -92,3 +79,5 @@ const styles = StyleSheet.create({
     fontSize: 10
   }
 })
+
+export default BLEservices

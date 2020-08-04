@@ -1,9 +1,8 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { View, StyleSheet, Text, Button } from 'react-native'
-import { writeCharacteristic } from '../../actions'
 
-function Item ({ characteristic }) {
+export const CharacteristicItem = ({ characteristic }) => {
   return (
     <View style={styles.item}>
       <Text style={styles.title}>{characteristic.uuid}</Text>
@@ -18,8 +17,7 @@ function Item ({ characteristic }) {
   )
 }
 
-function handleClick (readCharacteristic) {
-  console.log('Hello there')
+const enableNotificationsClicked = (readCharacteristic) => {
   readCharacteristic.monitor((error, characteristic) => {
     if (error) {
       console.log(error)
@@ -30,32 +28,17 @@ function handleClick (readCharacteristic) {
   })
 }
 
-function BLEReadcharacteristic (ReduxStore) {
-  // const [] = useState({ text: '' })
+const BLEReadcharacteristic = () => {
+  const { selectedCharacteristic } = useSelector(state => state.BLEs)
+
   return (
     <>
-      <Text>{ReduxStore.selectedCharacteristic.uuid}</Text>
-      <Item characteristic={ReduxStore.selectedCharacteristic} />
-      <Button
-        title='Enable Notifications'
-        onPress={() => handleClick(ReduxStore.selectedCharacteristic)}
-      />
+      <Text>{selectedCharacteristic.uuid}</Text>
+      <CharacteristicItem characteristic={selectedCharacteristic} />
+      <Button title='Enable Notifications' onPress={() => enableNotificationsClicked(selectedCharacteristic)} />
     </>
   )
 }
-// }
-
-function mapStateToProps (state) {
-  return {
-    selectedCharacteristic: state.BLEs.selectedCharacteristic
-  }
-}
-
-const mapDispatchToProps = dispatch => ({
-  writeCharacteristic: text => dispatch(writeCharacteristic(text))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(BLEReadcharacteristic)
 
 const styles = StyleSheet.create({
   container: {
@@ -75,3 +58,5 @@ const styles = StyleSheet.create({
     fontSize: 10
   }
 })
+
+export default BLEReadcharacteristic

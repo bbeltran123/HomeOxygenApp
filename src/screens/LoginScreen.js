@@ -9,7 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 const backgroundImage = require('../../res/background.png')
 const logoImage = require('../../res/logo.png')
 
-export default function LoginScreen ({ navigation }) {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { login } = useContext(AuthContext)
@@ -81,3 +81,5 @@ const styles = StyleSheet.create({
     color: '#000'
   }
 })
+
+export default LoginScreen

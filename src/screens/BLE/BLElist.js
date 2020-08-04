@@ -8,81 +8,67 @@ import {
   View
 } from 'react-native'
 import { Container, Footer } from 'native-base'
-import BLE from './BLE'
-import { connect, useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { connectDevice, startScan } from '../../actions'
 import DataActivityIndicator from '../../components/DataActivityIndicator'
 import { AuthContext } from '../../AuthProvider'
 
+// small component showing the status of BLE connection
+const BLEStatus = () => {
+  const { connectedDevice, status } = useSelector(state => state.BLEs)
+
+  return (
+    <Container>
+      <Text>Status: {status}</Text>
+      {connectedDevice && <Text>Device: {connectedDevice.name}</Text>}
+    </Container>
+  )
+}
+
 const BLEList = (props) => {
+  const dispatch = useDispatch()
+  const { logout } = useContext(AuthContext)
+  const BLEList = useSelector(state => state.BLEs.BLEList)
+
   useEffect(() => {
-    props.startScan()
+    dispatch(startScan())
   })
 
-  const handleClick = (device) => {
-    props.connectDevice(device)
+  const connectToDevice = (device) => {
+    dispatch(connectDevice(device))
     props.navigation.navigate('BLEServices')
   }
-
-  const {logout} = useContext(AuthContext)
-
-  const BLEList = useSelector(state => state.BLEs.BLEList)
 
   return (
     <Container>
       <FlatList
         data={BLEList}
         renderItem={({ item }) =>
-          <>
-            <TouchableHighlight
-              onPress={() => handleClick(item)}
-              style={styles.rowFront}
-              underlayColor='#DDDDDD'
-            >
-              <View>
-                <Text
-                  style={{ color: 'white', fontWeight: 'bold' }}
-                >
-                            Tap to connect to: {item.name}
-                </Text>
-              </View>
-            </TouchableHighlight>
-          </>}
+          <TouchableHighlight onPress={() => connectToDevice(item)} style={styles.rowFront} underlayColor='#DDDDDD'>
+            <View>
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>
+                 Tap to connect to: {item.name}
+              </Text>
+            </View>
+          </TouchableHighlight>}
         keyExtractor={item => item.id.toString()}
         ListEmptyComponent={DataActivityIndicator}
       />
 
-      <TouchableHighlight
-        onPress={logout}
-        style={styles.rowFront}
-        underlayColor='#DDDDDD'
-      >
+      <TouchableHighlight onPress={logout} style={styles.rowFront} underlayColor='#DDDDDD'>
         <View>
-          <Text
-            style={{ color: 'white', fontWeight: 'bold' }}
-          >
-                            Logout
+          <Text style={{ color: 'white', fontWeight: 'bold' }}>
+            Logout
           </Text>
         </View>
       </TouchableHighlight>
 
       <Footer>
-        <BLE />
+        <BLEStatus />
       </Footer>
     </Container>
   )
 }
-
-function mapStateToProps (state) {
-  return {
-    BLEList: state.BLEs.BLEList
-  }
-}
-
-const mapDispatchToProps = dispatch => ({
-  connectDevice: device => dispatch(connectDevice(device)),
-  startScan: () => dispatch(startScan())
-})
 
 const styles = StyleSheet.create({
   container: {
@@ -164,4 +150,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(BLEList)
+export default BLEList

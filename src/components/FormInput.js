@@ -2,7 +2,7 @@
 import React from 'react'
 import { StyleSheet, TextInput } from 'react-native'
 
-export default function FormInput ({ labelValue, placeholderText, ...rest }) {
+const FormInput = ({ labelValue, placeholderText, ...rest }) => {
   return (
     <TextInput
       value={labelValue}
@@ -28,3 +28,5 @@ const styles = StyleSheet.create({
     borderColor: '#ADA7A7'
   }
 })
+
+export default FormInput

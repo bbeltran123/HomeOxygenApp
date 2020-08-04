@@ -1,23 +1,15 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 import BLEReadCharacteristic from './BLEReadCharacteristic'
 import BLEWriteCharacteristic from './BLEWriteCharacteristic'
 
-function BLEcharacteristic (ReduxStore) {
-  if (ReduxStore.selectedCharacteristic.isNotifiable) {
+const BLEcharacteristic = (ReduxStore) => {
+  const selectedCharacteristic = useSelector(state => state.BLEs.selectedCharacteristic)
+  if (selectedCharacteristic.isNotifiable) {
     return (<BLEReadCharacteristic />)
-  } else if (ReduxStore.selectedCharacteristic.isWritableWithResponse || ReduxStore.selectedCharacteristic.isWritableWithoutResponse) {
+  } else if (selectedCharacteristic.isWritableWithResponse || selectedCharacteristic.isWritableWithoutResponse) {
     return (<BLEWriteCharacteristic />)
   }
 }
 
-function mapStateToProps (state) {
-  return {
-    selectedCharacteristic: state.BLEs.selectedCharacteristic
-  }
-}
-
-const mapDispatchToProps = () => ({
-})
-
-export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(BLEcharacteristic)
+export default BLEcharacteristic

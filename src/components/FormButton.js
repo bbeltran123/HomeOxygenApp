@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity, Text } from 'react-native'
 
-export default function FormButton ({ buttonTitle, ...rest }) {
+const FormButton = ({ buttonTitle, ...rest }) => {
   return (
     <TouchableOpacity style={styles.buttonContainer} {...rest}>
       <Text style={styles.buttonText}>{buttonTitle}</Text>
@@ -27,3 +27,5 @@ const styles = StyleSheet.create({
     color: '#ffffff'
   }
 })
+
+export default FormButton

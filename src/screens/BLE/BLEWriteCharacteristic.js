@@ -1,59 +1,34 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import { View, StyleSheet, Text, TextInput, Button } from 'react-native'
 import { writeCharacteristic } from '../../actions'
+import { CharacteristicItem } from './BLEReadCharacteristic'
 
-function Item ({ characteristic }) {
-  return (
-    <View style={styles.item}>
-      <Text style={styles.title}>{characteristic.uuid}</Text>
-      <Text style={styles.subtext}>Notifiable: {characteristic.isNotifiable.toString()}</Text>
-      <Text style={styles.subtext}>Notifying: {characteristic.isNotifying.toString()}</Text>
-      <Text style={styles.subtext}>Readable: {characteristic.isReadable.toString()}</Text>
-      <Text style={styles.subtext}>Indicatable: {characteristic.isIndicatable.toString()}</Text>
-      <Text style={styles.subtext}>Writeable with Response: {characteristic.isWritableWithResponse.toString()}</Text>
-      <Text style={styles.subtext}>Writeable without Response: {characteristic.isWritableWithoutResponse.toString()}</Text>
 
-    </View>
-  )
-}
-
-function handleClick (ReduxStore, text) {
-  ReduxStore.writeCharacteristic(text + '\n')
-}
-
-function BLEWritecharacteristic (ReduxStore) {
-  const [text, setText] = useState({ text: '' })
+function BLEWritecharacteristic () {
+  const { selectedCharacteristic } = useSelector(state => state.BLEs)
+  const dispatch = useDispatch()
+  
+  const [text, setText] = useState('')
 
   return (
     <>
-      <Text>{ReduxStore.selectedCharacteristic.uuid}</Text>
-      <Item characteristic={ReduxStore.selectedCharacteristic} />
+      <Text>{selectedCharacteristic.uuid}</Text>
+      <CharacteristicItem characteristic={selectedCharacteristic} />
       <TextInput
-        onChangeText={(text) => setText({ text })}
+        onChangeText={(text) => setText(text)}
         style={{ height: 40, color: 'black', borderColor: 'gray', borderWidth: 1 }}
-        value={text.text}
+        value={text}
       />
       <Button
         title='Write'
-        onPress={() => handleClick(ReduxStore, text.text)}
+        onPress={() => dispatch(writeCharacteristic(text + '\n'))}
       />
     </>
   )
 }
-// }
 
-function mapStateToProps (state) {
-  return {
-    selectedCharacteristic: state.BLEs.selectedCharacteristic
-  }
-}
-
-const mapDispatchToProps = dispatch => ({
-  writeCharacteristic: text => dispatch(writeCharacteristic(text))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(BLEWritecharacteristic)
+export default BLEWritecharacteristic
 
 const styles = StyleSheet.create({
   container: {

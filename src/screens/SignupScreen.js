@@ -9,7 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 const backgroundImage = require('../../res/background.png')
 const logoImage = require('../../res/logo.png')
 
-export default function SignupScreen ({ navigation }) {
+const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
@@ -88,3 +88,5 @@ const styles = StyleSheet.create({
     color: '#000'
   }
 })
+
+export default SignupScreen
