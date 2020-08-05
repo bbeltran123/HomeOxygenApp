@@ -36,6 +36,26 @@ export const changeStatus = (status) => ({
   status: status
 })
 
+export const changeHeartRate = (heartRate) => ({
+  type: 'CHANGE_HEARTRATE',
+  heartRate: heartRate
+})
+
+export const changeSPO2 = (SPO2) => ({
+  type: 'CHANGE_SPO2',
+  SPO2: SPO2
+})
+
+export const changeReadCharacteristic = (readCharacteristic) => ({
+  type: 'CHANGE_READCHARACTERISTIC',
+  readCharacteristic: readCharacteristic
+})
+
+export const changeWriteCharacteristic = (writeCharacteristic) => ({
+  type: 'CHANGE_WRITECHARACTERISTIC',
+  writeCharacteristic: writeCharacteristic
+})
+
 // some thunks to control the BLE Device
 
 export const startScan = () => {
@@ -87,9 +107,9 @@ export const scan = () => {
           console.log(error)
         }
         if (device !== null) {
-          // if (device.name === 'O2Ring 6598') {
+          if (device.name === 'O2Ring 6598') {
           dispatch(addBLE(device))
-          // }
+          }
         }
       })
     } else {
@@ -148,13 +168,61 @@ export const connectDevice = (device) => {
         return services
       })
       .then((services) => {
-        // console.log("found services: ", services)
         dispatch(connectedDeviceServices(services))
       }, (error) => {
         console.log(error)
       })
   }
 }
+
+export const connectDeviceCompletely = (device) => {
+  return (dispatch, getState, DeviceManager) => {
+    dispatch(changeStatus('Connecting'))
+    dispatch(connectedDevice(device))
+    DeviceManager.stopDeviceScan()
+    device
+      .connect()
+      .then((device) => {
+        dispatch(changeStatus('Discovering'))
+        const allCharacteristics = device.discoverAllServicesAndCharacteristics()
+        return allCharacteristics
+      })
+      .then((device) => {
+        const services = device.services(device.id)
+        return services
+      })
+      .then((services) => {
+        var correctService = []
+        for(i = 0; i < services.length; i ++){
+          if(services[i].uuid === '14839ac4-7d7e-415c-9a42-167340cf2339'){
+            correctService.push(services[i])
+          }
+        } 
+        dispatch(connectedDeviceServices(correctService))        
+        dispatch(selectedService(correctService[0]))
+        return correctService[0]
+      })
+      .then(service => {
+        const characteristics = service.characteristics(service.uuid)
+        return characteristics
+      })
+      .then(characteristics => {
+        for(i = 0; i < characteristics.length; i ++){
+          if(characteristics[i].uuid === '0734594a-a8e7-4b1a-a6b1-cd5243059a57'){
+            dispatch(changeReadCharacteristic(characteristics[i]))
+          }
+          if(characteristics[i].uuid === '8b00ace7-eb0b-49b0-bbe9-9aee0a26e1a3'){
+            dispatch(changeWriteCharacteristic(characteristics[i]))
+          }
+        }
+      }, (error) => {
+        console.log(error)
+      })
+
+      
+  }  
+}
+
 
 // const crcVal = (array) => {
 //   var CRC8_TABLE = [
@@ -198,30 +266,14 @@ function str2ab (str) {
   return bufView
 }
 
-export const writeCharacteristic = (text) => {
+export const writeCharacteristic = () => {
   return (dispatch, getState, DeviceManager) => {
     const state = getState()
-    console.log(state.BLEs.connectedDevice)
-    const buffer = str2ab(text)
-    const packetsize = 20
-    let offset = 0
-    let packetlength = packetsize
-    do {
-      if (offset + packetsize > buffer.length) {
-        packetlength = buffer.length
-      } else {
-        packetlength = offset + packetsize
-      }
-      const packet = buffer.slice(offset, packetlength)
-      // console.log("packet: ", packet)
-      const base64packet = Base64.btoa(String.fromCharCode.apply(null, packet))
-      console.log('base64 packet: ', base64packet)
-      const deviceInfoPacket = 'qhTrAAAAAMY='
-      // const resetpacket = 'qhjnAAAAALs='
-      state.BLEs.connectedDevice.writeCharacteristicWithoutResponseForService(state.BLEs.selectedService.uuid, state.BLEs.selectedCharacteristic.uuid, deviceInfoPacket)
-      console.log('\n\n\n')
-      console.log(state.BLEs.connectedDevice)
-      offset += packetsize
-    } while (offset < buffer.length)
+    // console.log("packet: ", packet)
+    const deviceInfoPacket = 'qhTrAAAAAMY='
+    // const resetpacket = 'qhjnAAAAALs='
+    const realTimePacket = 'qhfoAAAAABs='
+    const realTimeWaveform = 'qhvkAAABAHM='
+    state.BLEs.connectedDevice.writeCharacteristicWithoutResponseForService(state.BLEs.selectedService.uuid, state.BLEs.writeCharacteristic.uuid, realTimePacket)
   }
 }
