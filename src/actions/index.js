@@ -148,7 +148,7 @@ export const connectDevice = (device) => {
         return services
       })
       .then((services) => {
-        // console.log("found services: ", services)
+        console.log("found services: ", services)
         dispatch(connectedDeviceServices(services))
       }, (error) => {
         console.log(error)
