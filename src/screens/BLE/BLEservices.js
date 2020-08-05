@@ -12,7 +12,6 @@ const ServiceItem = ({ service }) => {
     </View>
   )
 }
-//
 const BLEservices = (props) => {
   const { connectedDeviceServices, connectedDevice } = useSelector(state => state.BLEs)
   const dispatch = useDispatch()
