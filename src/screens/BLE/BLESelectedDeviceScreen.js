@@ -23,26 +23,16 @@ import DataActivityIndicator from './../../components/DataActivityIndicator'
 const HeartRateData = (data) => {
 return (
   <View style={styles.item}>
-    <Text style={styles.title}>Heart Rate: {data - 8}</Text>
+    <Text style={styles.title}>Heart Rate: {data}</Text>
   </View>
   )
 }
 
-const SPO2Data = (data) => {
+const O2RingData = ({dataType,data}) => {
 return (
   <View style={styles.item}>
-    <Text style={styles.title}>SPO2: {data+4}</Text>
+    <Text style={styles.title}>{dataType}: {data}</Text>
   </View>
-  )
-}
-
-const Item = (service) => {
-  return (
-    <View style={styles.item}>
-      <Text style={styles.title}>{service.uuid}</Text>
-        //
-      <Text style={styles.subtext}>Primary: {service.isPrimary.toString()}</Text>
-    </View>
   )
 }
 
@@ -97,8 +87,12 @@ const BLESelectedDeviceScreen = (BLEServices) => {
         title='read O2 Ring'
             onPress={() => handleClick(heartRate, BLEReadCharacteristic, BLEServices)}
       />
-      <HeartRateData data={ heartRate}/>
-      <SPO2Data data={SPO2}/>
+      <O2RingData 
+        dataType={"Heart Rate"} 
+        data={heartRate} />
+      <O2RingData 
+        dataType={"SPO2"} 
+        data={SPO2} />
 
       <TouchableHighlight
         onPress={() =>
