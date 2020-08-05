@@ -7,8 +7,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import LoginScreen from './screens/LoginScreen'
 import Icon from 'react-native-vector-icons/Ionicons'
 import BLEList from './screens/BLE/BLElist'
-import BLEservices from './screens/BLE/BLEservices'
-import BLEservicecharacteristics from './screens/BLE/BLEservicecharacteristics'
+import BLESelectedDeviceScreen from './screens/BLE/BLESelectedDeviceScreen'
+import BLEservicecharacteristics from './screens/BLE/BLEServiceCharacteristics'
 import BLECharacteristic from './screens/BLE/BLEcharacteristics'
 import { AuthContext } from './AuthProvider'
 import Loading from './components/Loading'
@@ -87,7 +87,7 @@ function BLEScreens () {
       }}
     >
       <Stack.Screen name='BLEDevices' component={BLEList} />
-      <Stack.Screen name='BLEServices' component={BLEservices} />
+      <Stack.Screen name='BLESelectedDeviceScreen' component={BLESelectedDeviceScreen} />
       <Stack.Screen name='BLECharacteristics' component={BLEservicecharacteristics} />
       <Stack.Screen name='BLECharacteristic' component={BLECharacteristic} />
     </Stack.Navigator>

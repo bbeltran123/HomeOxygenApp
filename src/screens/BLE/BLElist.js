@@ -21,7 +21,7 @@ const BLEList = (props) => {
 
   const handleClick = (device) => {
     props.connectDeviceCompletely(device)
-    props.navigation.navigate('BLEServices')
+    props.navigation.navigate('BLESelectedDeviceScreen')
   }
 
   const {logout} = useContext(AuthContext)
