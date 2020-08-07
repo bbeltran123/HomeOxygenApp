@@ -39,7 +39,7 @@ const BLESelectedDeviceScreen = (props) => {
   const dispatch = useDispatch()
 
   const handleReadRing = () => {
-    var dataArr = []
+    const dataArr = []
     props.BLEReadCharacteristic.monitor((error, characteristic) => {
       console.log('notifications enabled')
       if (error) {
@@ -52,10 +52,10 @@ const BLESelectedDeviceScreen = (props) => {
         dataArr.push(characteristic.value)
       }
       console.log(dataArr.length)
-      var hexString = base64ToHex(dataArr[0])
+      const hexString = base64ToHex(dataArr[0])
       console.log(hexString)
-      var SPO2 = (parseInt(hexString.charAt(14), 10) * 16) + parseInt((hexString.charAt[15], 10))
-      var HR = (parseInt(hexString.charAt(16), 10) * 16) + parseInt((hexString.charAt[17], 10))
+      const SPO2 = (parseInt(hexString.charAt(14), 10) * 16) + parseInt((hexString.charAt[15], 10))
+      const HR = (parseInt(hexString.charAt(16), 10) * 16) + parseInt((hexString.charAt[17], 10))
       dispatch(changeSPO2(SPO2))
       dispatch(changeHeartRate(HR))
     })
