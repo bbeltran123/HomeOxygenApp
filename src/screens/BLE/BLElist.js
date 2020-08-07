@@ -9,9 +9,10 @@ import {
 } from 'react-native'
 import { Container, Footer } from 'native-base'
 import { useSelector, useDispatch } from 'react-redux'
-import { connectDevice, connectDeviceCompletely, startScan } from '../../actions'
+import { connectDeviceCompletely, startScan } from '../../actions'
 import DataActivityIndicator from '../../components/DataActivityIndicator'
 import { AuthContext } from '../../AuthProvider'
+import DeviceListItem from '../../components/BLE/DeviceListItem'
 
 // small component showing the status of BLE connection
 const BLEStatus = () => {
@@ -43,14 +44,7 @@ const BLEList = (props) => {
     <Container>
       <FlatList
         data={BLEList}
-        renderItem={({ item }) =>
-          <TouchableHighlight onPress={() => connectToDevice(item)} style={styles.rowFront} underlayColor='#DDDDDD'>
-            <View>
-              <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                 Tap to connect to: {item.name}
-              </Text>
-            </View>
-          </TouchableHighlight>}
+        renderItem={({ item }) => { return <DeviceListItem device={item} onPress={connectToDevice(item)} /> }}
         keyExtractor={item => item.id.toString()}
         ListEmptyComponent={DataActivityIndicator}
       />
@@ -95,14 +89,6 @@ const styles = StyleSheet.create({
   },
   backTextWhite: {
     color: '#FFF'
-  },
-  rowFront: {
-    alignItems: 'center',
-    backgroundColor: '#4DA6A6',
-    borderBottomColor: 'white',
-    borderBottomWidth: 4,
-    justifyContent: 'center',
-    height: 50
   },
   rowBack: {
     alignItems: 'center',

@@ -107,9 +107,9 @@ export const scan = () => {
           console.log(error)
         }
         if (device !== null) {
-          if (device.name === 'O2Ring 6598') {
+          // if (device.name === 'O2Ring 6598') {
           dispatch(addBLE(device))
-          }
+          // }
         }
       })
     } else {
