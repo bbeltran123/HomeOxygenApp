@@ -107,9 +107,9 @@ export const scan = () => {
           console.log(error)
         }
         if (device !== null) {
-          // if (device.name === 'O2Ring 6598') {
-          dispatch(addBLE(device))
-          // }
+          if (device.name === 'O2Ring 6598') {
+            dispatch(addBLE(device))
+          }
         }
       })
     } else {
@@ -193,12 +193,12 @@ export const connectDeviceCompletely = (device) => {
       })
       .then((services) => {
         var correctService = []
-        for(i = 0; i < services.length; i ++){
-          if(services[i].uuid === '14839ac4-7d7e-415c-9a42-167340cf2339'){
+        for (let i = 0; i < services.length; i++) {
+          if (services[i].uuid === '14839ac4-7d7e-415c-9a42-167340cf2339') {
             correctService.push(services[i])
           }
-        } 
-        dispatch(connectedDeviceServices(correctService))        
+        }
+        dispatch(connectedDeviceServices(correctService))
         dispatch(selectedService(correctService[0]))
         return correctService[0]
       })
@@ -207,22 +207,19 @@ export const connectDeviceCompletely = (device) => {
         return characteristics
       })
       .then(characteristics => {
-        for(i = 0; i < characteristics.length; i ++){
-          if(characteristics[i].uuid === '0734594a-a8e7-4b1a-a6b1-cd5243059a57'){
+        for (let i = 0; i < characteristics.length; i++) {
+          if (characteristics[i].uuid === '0734594a-a8e7-4b1a-a6b1-cd5243059a57') {
             dispatch(changeReadCharacteristic(characteristics[i]))
           }
-          if(characteristics[i].uuid === '8b00ace7-eb0b-49b0-bbe9-9aee0a26e1a3'){
+          if (characteristics[i].uuid === '8b00ace7-eb0b-49b0-bbe9-9aee0a26e1a3') {
             dispatch(changeWriteCharacteristic(characteristics[i]))
           }
         }
       }, (error) => {
         console.log(error)
       })
-
-      
-  }  
+  }
 }
-
 
 // const crcVal = (array) => {
 //   var CRC8_TABLE = [
