@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import { Container, Footer } from 'native-base'
 import { useSelector, useDispatch } from 'react-redux'
-import { connectDevice, connectDeviceCompletely, startScan } from '../../actions'
+import { connectDeviceCompletely, startScan } from '../../actions'
 import DataActivityIndicator from '../../components/DataActivityIndicator'
 import { AuthContext } from '../../AuthProvider'
 
