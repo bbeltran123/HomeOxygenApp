@@ -39,25 +39,39 @@ const BLEList = (props) => {
     props.navigation.navigate('BLESelectedDeviceScreen')
   }
 
+  const DeviceListItem = (item) => {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.rowTitleText}> {item.item.name} </Text>
+        <View style={styles.rowContainer}>
+          <View style={{ height: 100, width: 100, backgroundColor: 'blue' }} />
+          <TouchableHighlight onPress={() => { connectToDevice(item.item) }} style={styles.rowFront} underlayColor='#DDDDDD'>
+            <Text style={styles.rowFrontText}>
+              Connect
+            </Text>
+          </TouchableHighlight>
+        </View>
+        <View style={styles.borderView} />
+      </View>
+    )
+  }
+
   return (
     <Container>
       <FlatList
         data={BLEList}
-        renderItem={({ item }) =>
-          <TouchableHighlight onPress={() => connectToDevice(item)} style={styles.rowFront} underlayColor='#DDDDDD'>
-            <View>
-              <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                 Tap to connect to: {item.name}
-              </Text>
-            </View>
-          </TouchableHighlight>}
+        renderItem={({ item }) => {
+          return (
+            <DeviceListItem item={item} />
+          )
+        }}
         keyExtractor={item => item.id.toString()}
         ListEmptyComponent={DataActivityIndicator}
       />
 
-      <TouchableHighlight onPress={logout} style={styles.rowFront} underlayColor='#DDDDDD'>
+      <TouchableHighlight onPress={logout} style={styles.logoutButton} underlayColor='#DDDDDD'>
         <View>
-          <Text style={{ color: 'white', fontWeight: 'bold' }}>
+          <Text style={{ color: 'black', fontWeight: 'bold' }}>
             Logout
           </Text>
         </View>
@@ -72,8 +86,16 @@ const BLEList = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: '#F5FDFF',
     flex: 1
+  },
+  borderView: {
+    margin: 30,
+    alignSelf: 'center',
+    bottom: 0,
+    width: '80%',
+    height: 2,
+    backgroundColor: '#DDD'
   },
   standalone: {
     marginTop: 30,
@@ -98,11 +120,42 @@ const styles = StyleSheet.create({
   },
   rowFront: {
     alignItems: 'center',
-    backgroundColor: '#4DA6A6',
-    borderBottomColor: 'white',
-    borderBottomWidth: 4,
     justifyContent: 'center',
-    height: 50
+    backgroundColor: 'white',
+    borderColor: '#4DA6A6',
+    borderRadius: 5,
+    borderWidth: 1,
+    height: 28,
+    width: 130
+  },
+  rowTitleText: {
+    color: 'black',
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    fontSize: 25,
+    margin: 15
+  },
+  rowFrontText: {
+    color: 'black',
+    fontWeight: 'bold'
+  },
+  rowContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 20,
+    flexDirection: 'row'
+  },
+  logoutButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    backgroundColor: 'white',
+    borderColor: '#4DA6A6',
+    borderRadius: 5,
+    borderWidth: 1,
+    height: 28,
+    width: 130
   },
   rowBack: {
     alignItems: 'center',
